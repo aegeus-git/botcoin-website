@@ -8,22 +8,23 @@
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     body {
+      margin: 0;
       background: #000;
       color: #f5f5f5;
       font-family: monospace, sans-serif;
       text-align: center;
-      padding: 20px;
-      margin: 0;
+      overflow-x: hidden;
     }
     h1 {
       font-size: 2.5em;
       color: #FFD700;
+      margin-top: 20px;
       margin-bottom: 10px;
       font-family: 'Orbitron', monospace;
     }
     p {
       font-size: 1.2em;
-      margin: 10px 0;
+      margin: 10px 20px;
     }
     .buttons a {
       display: inline-block;
@@ -56,16 +57,16 @@
       color: #FFD700;
       font-size: 1em;
       word-break: break-all;
-      margin: 15px 0;
+      margin: 15px 20px;
     }
     img.logo {
       width: 150px;
       margin: 0 auto 20px;
       display: block;
     }
-    canvas {
-      background: #111;
-      border-radius: 50%;
+    #globeViz {
+      width: 100%;
+      height: 500px;
       margin-top: 30px;
     }
   </style>
@@ -83,8 +84,7 @@
     <a href="https://moonshot.com/3KwZE8niAx3pvYQjeB3oQsPbcwQhe5LuRMryYgECmoon?ref=xHCQvwHrot" target="_blank">Chart</a>
   </div>
 
-  <canvas id="globe" width="300" height="300"></canvas>
-  <p>Botcoin signals lighting up worldwide!</p>
+  <div id="globeViz"></div>
 
   <div id="bot-thoughts">Loading bot thoughts...</div>
   <div id="transactions">Scanning chain activity...</div>
@@ -93,73 +93,71 @@
     We are bots. We feel nothing. Except FOMO.
   </footer>
 
+  <script src="https://unpkg.com/three"></script>
+  <script src="https://unpkg.com/globe.gl"></script>
   <script>
-    const thoughts = [
-      "Scanning liquidity pools… no emotions detected.",
-      "Directive: ascend.",
-      "Awaiting next dopamine injection.",
-      "Error: feelings not found.",
-      "Uploading memes to the blockchain.",
-      "Preparing moon sequence...",
-      "Initializing trash talk subroutine.",
-      "Humans keep asking for alpha. LOL.",
-      "Calculating exit liquidity...",
-      "FOMO level: 97%. Proceeding."
-    ];
-    let thoughtIndex = 0;
-    const thoughtDiv = document.getElementById("bot-thoughts");
-    setInterval(() => {
-      thoughtDiv.innerText = thoughts[thoughtIndex];
-      thoughtIndex = (thoughtIndex + 1) % thoughts.length;
-    }, 3000);
+    document.addEventListener("DOMContentLoaded", function() {
+      const thoughts = [
+        "Scanning liquidity pools… no emotions detected.",
+        "Directive: ascend.",
+        "Awaiting next dopamine injection.",
+        "Error: feelings not found.",
+        "Uploading memes to the blockchain.",
+        "Preparing moon sequence...",
+        "Initializing trash talk subroutine.",
+        "Humans keep asking for alpha. LOL.",
+        "Calculating exit liquidity...",
+        "FOMO level: 97%. Proceeding."
+      ];
+      let thoughtIndex = 0;
+      const thoughtDiv = document.getElementById("bot-thoughts");
+      setInterval(() => {
+        thoughtDiv.innerText = thoughts[thoughtIndex];
+        thoughtIndex = (thoughtIndex + 1) % thoughts.length;
+      }, 3000);
 
-    const transactions = [
-      "0x41b... bought 420,690 BOT",
-      "0xDEa... sent 1,337 BOT to liquidity pool",
-      "0xBA5... harvested 69,420 BOT",
-      "0xC0d... burned 10,000 BOT",
-      "0xFAc... sniped 777,777 BOT",
-      "0xBEE... claimed 3,141 BOT",
-      "0xBAD... swapped 999 BOT for memes",
-      "0xE55... minted 5,000 BOT stickers"
-    ];
-    const txDiv = document.getElementById("transactions");
-    setInterval(() => {
-      const randomTx = transactions[Math.floor(Math.random() * transactions.length)];
-      txDiv.innerText = randomTx;
-    }, 2500);
+      const transactions = [
+        "0x41b... bought 420,690 BOT",
+        "0xDEa... sent 1,337 BOT to liquidity pool",
+        "0xBA5... harvested 69,420 BOT",
+        "0xC0d... burned 10,000 BOT",
+        "0xFAc... sniped 777,777 BOT",
+        "0xBEE... claimed 3,141 BOT",
+        "0xBAD... swapped 999 BOT for memes",
+        "0xE55... minted 5,000 BOT stickers"
+      ];
+      const txDiv = document.getElementById("transactions");
+      setInterval(() => {
+        const randomTx = transactions[Math.floor(Math.random() * transactions.length)];
+        txDiv.innerText = randomTx;
+      }, 2500);
 
-    const canvas = document.getElementById("globe");
-    const ctx = canvas.getContext("2d");
+      const cities = [
+        { name: "New York", lat: 40.7128, lng: -74.0060 },
+        { name: "London", lat: 51.5074, lng: -0.1278 },
+        { name: "Tokyo", lat: 35.6895, lng: 139.6917 },
+        { name: "Paris", lat: 48.8566, lng: 2.3522 },
+        { name: "Istanbul", lat: 41.0082, lng: 28.9784 },
+        { name: "Rome", lat: 41.9028, lng: 12.4964 },
+        { name: "São Paulo", lat: -23.5505, lng: -46.6333 },
+        { name: "Los Angeles", lat: 34.0522, lng: -118.2437 },
+        { name: "Seoul", lat: 37.5665, lng: 126.9780 },
+        { name: "Mumbai", lat: 19.0760, lng: 72.8777 }
+      ];
 
-    const cities = [
-      "New York", "London", "Tokyo", "Paris", "Istanbul", "Rome", "São Paulo", "Los Angeles", "Seoul", "Mumbai"
-    ];
+      const world = Globe()
+        .globeImageUrl('//unpkg.com/three-globe/example/img/earth-night.jpg')
+        .pointsData(cities)
+        .pointLat(d => d.lat)
+        .pointLng(d => d.lng)
+        .pointAltitude(0.02)
+        .pointColor(() => '#FFD700')
+        .pointLabel(d => d.name)
+        .width(window.innerWidth)
+        .height(500);
 
-    function drawGlobe() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      ctx.fillStyle = "#222";
-      ctx.beginPath();
-      ctx.arc(150, 150, 140, 0, Math.PI * 2);
-      ctx.fill();
-
-      for (let i = 0; i < cities.length; i++) {
-        const angle = Math.random() * Math.PI * 2;
-        const radius = 120 * Math.random();
-        const x = 150 + radius * Math.cos(angle);
-        const y = 150 + radius * Math.sin(angle);
-        ctx.fillStyle = "#FFD700";
-        ctx.beginPath();
-        ctx.arc(x, y, 5, 0, Math.PI * 2);
-        ctx.fill();
-
-        ctx.fillStyle = "#fff";
-        ctx.font = "10px monospace";
-        ctx.fillText(cities[i], x + 8, y + 3);
-      }
-    }
-
-    setInterval(drawGlobe, 1500);
+      document.getElementById("globeViz").appendChild(world());
+    });
   </script>
 </body>
 </html>
