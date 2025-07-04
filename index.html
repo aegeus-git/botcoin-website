@@ -25,8 +25,14 @@
       font-size: 1.2em;
       margin: 10px 20px;
     }
+    .buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
     .buttons a {
-      display: inline-block;
+      flex: 1 1 200px;
       margin: 10px;
       padding: 15px 30px;
       background: #FFD700;
@@ -35,14 +41,17 @@
       font-weight: bold;
       border-radius: 8px;
       transition: transform 0.2s;
+      font-family: 'Orbitron', monospace;
+      max-width: 250px;
     }
     .buttons a:hover {
-      transform: scale(1.1);
+      transform: scale(1.05);
     }
     footer {
-      margin-top: 40px;
+      margin-top: 60px;
       font-size: 1em;
       opacity: 0.8;
+      margin-bottom: 80px;
     }
     #bot-thoughts, #transactions {
       margin-top: 30px;
@@ -63,6 +72,21 @@
       margin: 0 auto 20px;
       display: block;
     }
+    #pulse-bar {
+      width: 80%;
+      height: 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid #FFD700;
+      margin: 30px auto;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    #pulse-fill {
+      height: 100%;
+      width: 0%;
+      background: #FFD700;
+      transition: width 0.5s ease-in-out;
+    }
   </style>
 </head>
 <body>
@@ -77,6 +101,8 @@
     <a href="https://moonshot.com/3KwZE8niAx3pvYQjeB3oQsPbcwQhe5LuRMryYgECmoon?ref=xHCQvwHrot" target="_blank">Buy on Moonshot</a>
     <a href="https://moonshot.com/3KwZE8niAx3pvYQjeB3oQsPbcwQhe5LuRMryYgECmoon?ref=xHCQvwHrot" target="_blank">Chart</a>
   </div>
+
+  <div id="pulse-bar"><div id="pulse-fill"></div></div>
 
   <div id="bot-thoughts">Loading bot thoughts...</div>
   <div id="transactions">Scanning chain activity...</div>
@@ -120,6 +146,13 @@
       const randomTx = transactions[Math.floor(Math.random() * transactions.length)];
       txDiv.innerText = randomTx;
     }, 2500);
+
+    // Liquidity pulse animation
+    const pulseFill = document.getElementById("pulse-fill");
+    setInterval(() => {
+      const newWidth = Math.floor(Math.random() * 100);
+      pulseFill.style.width = newWidth + "%";
+    }, 1500);
   </script>
 </body>
 </html>
