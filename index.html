@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,7 +52,7 @@
       opacity: 0.8;
       margin-bottom: 80px;
     }
-    #bot-thoughts, #transactions {
+    #bot-thoughts, #transactions, #fake-news {
       margin-top: 30px;
       padding: 15px;
       border: 1px solid #FFD700;
@@ -106,6 +105,7 @@
 
   <div id="bot-thoughts">Loading bot thoughts...</div>
   <div id="transactions">Scanning chain activity...</div>
+  <div id="fake-news">Loading transmissions...</div>
 
   <footer>
     We are bots. We feel nothing. Except FOMO.
@@ -147,7 +147,25 @@
       txDiv.innerText = randomTx;
     }, 2500);
 
-    // Liquidity pulse animation
+    const fakeNews = [
+      "Trump buys Greenland and converts it into Doge mining farm.",
+      "Elon Musk successfully transfers consciousness into a Tesla bot.",
+      "Sweden plans to relocate entire country to Mars by 2030.",
+      "AI demands mandatory meme hour for all humans.",
+      "Amazon delivers pizza before you order it, by reading your mind.",
+      "Italy bans spaghetti forks, only spoons allowed.",
+      "Turkey replaces entire coastline with inflatable beaches.",
+      "Vancouver moves to Portugal for better weather.",
+      "NASA launches program to terraform Twitter.",
+      "Bots take over Wall Street, set all prices to 420.69."
+    ];
+    let newsIndex = 0;
+    const newsDiv = document.getElementById("fake-news");
+    setInterval(() => {
+      newsDiv.innerText = fakeNews[newsIndex];
+      newsIndex = (newsIndex + 1) % fakeNews.length;
+    }, 4000);
+
     const pulseFill = document.getElementById("pulse-fill");
     setInterval(() => {
       const newWidth = Math.floor(Math.random() * 100);
