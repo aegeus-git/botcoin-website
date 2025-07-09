@@ -21,6 +21,10 @@
       margin-bottom: 10px;
       font-family: 'Orbitron', monospace;
     }
+    h2 {
+      color: #FFCC00;
+      margin-top: 50px;
+    }
     p {
       font-size: 1.2em;
       margin: 10px 0;
@@ -47,23 +51,23 @@
     .buttons a:hover {
       transform: scale(1.05);
     }
+    section {
+      max-width: 800px;
+      margin: auto;
+      text-align: left;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    ul li {
+      margin: 10px 0;
+    }
     footer {
       margin-top: 60px;
       font-size: 1em;
       opacity: 0.8;
       margin-bottom: 80px;
-    }
-    #bot-thoughts, #transactions, #fake-news {
-      margin-top: 30px;
-      padding: 20px;
-      border: 2px solid #FFCC00;
-      border-radius: 12px;
-      background: rgba(255, 204, 0, 0.1);
-      min-height: 60px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
     }
     .contract-address {
       color: #FFCC00;
@@ -91,6 +95,13 @@
       background: #FFCC00;
       transition: width 0.5s ease-in-out;
     }
+    #chart iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      margin-top: 20px;
+      border-radius: 12px;
+    }
   </style>
 </head>
 <body>
@@ -112,13 +123,44 @@
   <div id="transactions">Scanning chain activity...</div>
   <div id="fake-news">Loading transmissions...</div>
 
-  <section id="chart" style="margin-top: 50px;">
-    <h2 style="color: #FFCC00;">Chart</h2>
+  <section id="how-to-buy">
+    <h2>How to Buy</h2>
+    <ol>
+      <li>Download a Solana wallet (e.g., Phantom).</li>
+      <li>Buy SOL on your exchange of choice.</li>
+      <li>Send SOL to your wallet.</li>
+      <li>Go to Moonshot and search for "Botcoin".</li>
+      <li>Click "Buy" and confirm.</li>
+      <li>Prepare for robo-pump 🤖💥.</li>
+    </ol>
+  </section>
+
+  <section id="why-botcoin">
+    <h2>Why Botcoin?</h2>
+    <ul>
+      <li>✅ 100% meme-powered liquidity.</li>
+      <li>✅ Robots never sleep. Neither should your gains.</li>
+      <li>✅ No taxes, no limits, pure degen freedom.</li>
+      <li>✅ Strong community vibes & viral energy.</li>
+      <li>✅ Designed to dominate charts and minds.</li>
+    </ul>
+  </section>
+
+  <section id="tokenomics">
+    <h2>Tokenomics</h2>
+    <p>
+      - Total Supply: 1,000,000,000 BOT<br>
+      - Taxes: 0% buy / 0% sell<br>
+      - Liquidity: Locked and robot-guarded<br>
+      - Burns: None, bots replicate infinitely
+    </p>
+  </section>
+
+  <section id="chart">
+    <h2>Live Chart</h2>
     <iframe
-      src="https://geckoterminal.com/solana/pools/2Nt5xLRJ7vHpBbzVHdKYuu987xCj1HsbugJ5sCXTFxA2"
-      height="500"
-      width="100%"
-      style="border: none;"
+      src="https://www.geckoterminal.com/solana/pools/2Nt5xLRJ7vHpBbzVHdKYuu987xCj1HsbugJ5sCXTFxA2"
+      allowfullscreen
     ></iframe>
   </section>
 
